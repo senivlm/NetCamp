@@ -1,0 +1,16 @@
+D:\Documents\Kat\Lessons\2-2\Arrays\Arrays\bin\Debug\net5.0\Arrays.exe
+D:\Documents\Kat\Lessons\2-2\Arrays\Arrays\bin\Debug\net5.0\Arrays.deps.json
+D:\Documents\Kat\Lessons\2-2\Arrays\Arrays\bin\Debug\net5.0\Arrays.runtimeconfig.json
+D:\Documents\Kat\Lessons\2-2\Arrays\Arrays\bin\Debug\net5.0\Arrays.runtimeconfig.dev.json
+D:\Documents\Kat\Lessons\2-2\Arrays\Arrays\bin\Debug\net5.0\Arrays.dll
+D:\Documents\Kat\Lessons\2-2\Arrays\Arrays\bin\Debug\net5.0\Arrays.pdb
+D:\Documents\Kat\Lessons\2-2\Arrays\Arrays\obj\Debug\net5.0\Arrays.csproj.AssemblyReference.cache
+D:\Documents\Kat\Lessons\2-2\Arrays\Arrays\obj\Debug\net5.0\Arrays.GeneratedMSBuildEditorConfig.editorconfig
+D:\Documents\Kat\Lessons\2-2\Arrays\Arrays\obj\Debug\net5.0\Arrays.AssemblyInfoInputs.cache
+D:\Documents\Kat\Lessons\2-2\Arrays\Arrays\obj\Debug\net5.0\Arrays.AssemblyInfo.cs
+D:\Documents\Kat\Lessons\2-2\Arrays\Arrays\obj\Debug\net5.0\Arrays.csproj.CoreCompileInputs.cache
+D:\Documents\Kat\Lessons\2-2\Arrays\Arrays\obj\Debug\net5.0\Arrays.dll
+D:\Documents\Kat\Lessons\2-2\Arrays\Arrays\obj\Debug\net5.0\refint\Arrays.dll
+D:\Documents\Kat\Lessons\2-2\Arrays\Arrays\obj\Debug\net5.0\Arrays.pdb
+D:\Documents\Kat\Lessons\2-2\Arrays\Arrays\obj\Debug\net5.0\Arrays.genruntimeconfig.cache
+D:\Documents\Kat\Lessons\2-2\Arrays\Arrays\obj\Debug\net5.0\ref\Arrays.dll

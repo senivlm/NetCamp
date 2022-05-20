@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "+P6kPJu/fqR9Uf2cu8O6/p2TKhrpIcWLJG4+fm1hbLFe5ENDBpn93XhvsrZGxKRqWmv/Pz/nj+60HQYqYZv7gA==",
+  "success": true,
+  "projectFilePath": "D:\\Documents\\Kat\\Lessons\\1\\Product\\Product\\Product.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\kataytsev-ys\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\5.0.17\\microsoft.netcore.app.host.win-x64.5.0.17.nupkg.sha512"
+  ],
+  "logs": []
+}
