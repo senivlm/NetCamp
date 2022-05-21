@@ -8,19 +8,24 @@
     "net5.0": []
   },
   "packageFolders": {
-    "C:\\Users\\kataytsev-ys\\.nuget\\packages\\": {}
+    "C:\\Users\\YuriyIrina\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "d:\\Documents\\Kat\\Lessons\\2-1\\Product\\Product\\Product.csproj",
+      "projectUniqueName": "e:\\Projects-git\\NetCamp\\2-1\\Product\\Product\\Product.csproj",
       "projectName": "Product",
-      "projectPath": "d:\\Documents\\Kat\\Lessons\\2-1\\Product\\Product\\Product.csproj",
-      "packagesPath": "C:\\Users\\kataytsev-ys\\.nuget\\packages\\",
-      "outputPath": "d:\\Documents\\Kat\\Lessons\\2-1\\Product\\Product\\obj\\",
+      "projectPath": "e:\\Projects-git\\NetCamp\\2-1\\Product\\Product\\Product.csproj",
+      "packagesPath": "C:\\Users\\YuriyIrina\\.nuget\\packages\\",
+      "outputPath": "e:\\Projects-git\\NetCamp\\2-1\\Product\\Product\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "C:\\Users\\kataytsev-ys\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\YuriyIrina\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -55,18 +60,12 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
-        "downloadDependencies": [
-          {
-            "name": "Microsoft.NETCore.App.Host.win-x64",
-            "version": "[5.0.17, 5.0.17]"
-          }
-        ],
         "frameworkReferences": {
           "Microsoft.NETCore.App": {
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.203\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.200\\RuntimeIdentifierGraph.json"
       }
     }
   }

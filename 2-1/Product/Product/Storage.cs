@@ -8,15 +8,30 @@ namespace Product
 {
     internal class Storage
     {
-        private List<Product> products;
-        public List<Product> Products { get => products; private set => products = value; }
+        private Product[] products;
+        public Product[] Products { get => products; private set => products = value; }
         public Storage()
         {
-            Products = new List<Product>();
+            Products = new Product[20];
         }
-        public Storage(List<Product> products)
+        public Storage(int lenght)
+        {
+            Products = new Product[lenght];
+        }
+        public Storage(Product[] products)
         {
             Products = products;
+        }
+        public Product this[int index]
+        {
+            get
+            {
+                return products[index];
+            }
+            set
+            {
+                products[index] = value;
+            }
         }
         Product CreateProduct()
         {
@@ -76,7 +91,17 @@ namespace Product
             } while (!seccessful);
             return meat;
         }
-        void AddProductToList(Product product) => Products.Add(product);
+        void AddProductToList(Product product)
+        {
+            for (int i = 0; i < products.Length; i++)
+            {
+                if (products[i] == null)
+                {
+                    products[i] = product;
+                    break;
+                }
+            }
+        }
         public void AddProduct() => AddProductToList(CreateProduct());
         public void AddMeat() => AddProductToList(CreateMeat());
         public void InitializationProducts()
@@ -98,9 +123,9 @@ namespace Product
             Console.WriteLine("Повний список продуктів:");
             foreach (Product product in Products)
             {
+                if(product!=null)
                 Console.WriteLine(product);
             }
-            Console.WriteLine();
         }
         public List<Meat> GetAllMeatProduct()
         {
@@ -115,7 +140,8 @@ namespace Product
         {
             foreach (Product product in Products)
             {
-                product.IncreasePrice(percent);
+                if (product != null)
+                    product.IncreasePrice(percent);
             }
         }
     }
