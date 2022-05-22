@@ -1,10 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "KEQ7YmHj9elOAduvGYDGDNjKEn063Oh0kKDrUKPH9rHqG+NWMV94Z3KO6VsWmTWYM/dnchmgGh19E0HZi6t+nQ==",
+  "dgSpecHash": "HrmuR+MBzcLNoZpK85BsQwmP7J6JmXQKfcSJkIOFpVahiRO1q2oTXPGJ1Q6TAeVb7uKa6Jd9yaC6npvSosYv/Q==",
   "success": true,
-  "projectFilePath": "D:\\Documents\\Kat\\Lessons\\2-2\\Arrays\\Arrays\\Arrays.csproj",
-  "expectedPackageFiles": [
-    "C:\\Users\\kataytsev-ys\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\5.0.17\\microsoft.netcore.app.host.win-x64.5.0.17.nupkg.sha512"
-  ],
+  "projectFilePath": "e:\\Projects-git\\NetCamp\\2-2\\Arrays\\Arrays\\Arrays.csproj",
+  "expectedPackageFiles": [],
   "logs": []
 }
