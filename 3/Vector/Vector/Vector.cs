@@ -128,5 +128,50 @@ namespace Vector
             }
             return result;
         }
+        public void Bubble()
+        {
+            for (int i = 0; i < array.Length - 1; i++)
+            {
+                for (int j = 0; j < array.Length - i - 1; j++)
+                {
+                    if (array[j] < array[j + 1])
+                    {
+                        int item = array[j + 1];
+                        array[j + 1] = array[j];
+                        array[j] = item;
+                    }
+                }
+            }
+        }
+        public void Counting()
+        {
+            int max = array[0];
+            int min = array[0];
+            for (int i = 1; i < array.Length; i++)
+            {
+                if (array[i] > max)
+                {
+                    max = array[i];
+                }
+                if (array[i] < min)
+                {
+                    min = array[i];
+                }
+            }
+            int[] temp = new int[max - min + 1];
+            for (int i = 0; i < array.Length; i++)
+            {
+                temp[array[i] - min]++;
+            }
+            int k = 0;
+            for (int i = 0; i < temp.Length; i++)
+            {
+                for (int j = 0; j < temp[i]; j++)
+                {
+                    array[k++] = i + min;
+                }
+            }
+        }
+
     }
 }
