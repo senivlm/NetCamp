@@ -317,7 +317,7 @@ namespace Vector
         }
         void comparissionPyramidElem(int elem, int lenght)
         {
-            int l = elem * 2 + 1,r = elem * 2 + 2;
+            int l = elem * 2 + 1, r = elem * 2 + 2;
             int max = elem;
             if (l < lenght && array[l] > array[max]) max = l;
             if (r < lenght && array[r] > array[max]) max = r;
@@ -330,11 +330,11 @@ namespace Vector
         public void PyramidalSort()
         {
             int lenght = array.Length;
-            for(int i=lenght/2-1; i>=0; i--)
+            for (int i = lenght / 2 - 1; i >= 0; i--)
             {
                 comparissionPyramidElem(i, lenght);
             }
-            for(int i=lenght-1; i>=0; i--)
+            for (int i = lenght - 1; i >= 0; i--)
             {
                 Swap(i, 0);
                 comparissionPyramidElem(0, i);

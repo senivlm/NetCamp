@@ -14,7 +14,8 @@ namespace Vector
             Vector arrSM;
             Vector arrPyr;
             string fileName = "randomArray";
-            if (FileAccess.ReadArrayFromFile(fileName, out int[] fileArray))
+            string sortedFileName = "sortedArray";
+            if (FileServices.ReadArrayFromFile(fileName, out int[] fileArray))
             {
                 Console.WriteLine("Reading array from file");
                 arrBubble = new Vector(fileArray);
@@ -35,7 +36,7 @@ namespace Vector
                 arrQS = new Vector(arr);
                 arrSM = new Vector(arr);
                 arrPyr = new Vector(arr);
-                FileAccess.WriteArrayToFile(fileName, arr);
+                FileServices.WriteArrayToFile(fileName, arr);
             }
             Console.WriteLine("Unsorted array");
             Console.WriteLine(arrBubble);
@@ -44,8 +45,6 @@ namespace Vector
             arrBubble.Bubble();
             stopwatch.Stop();
             TimeSpan bubble = stopwatch.Elapsed;
-            Console.WriteLine("Sorted array");
-            Console.WriteLine(arrBubble);
             stopwatch.Restart();
             arrQS.QuickSort();
             stopwatch.Stop();
@@ -58,15 +57,31 @@ namespace Vector
             arrPyr.PyramidalSort();
             stopwatch.Stop();
             TimeSpan pyr = stopwatch.Elapsed;
-            Console.WriteLine("bubble = {0} sec and {1}msec", bubble.Seconds, bubble.Milliseconds);
-            Console.WriteLine("qSort = {0} sec and {1}msec", qs.Seconds, qs.Milliseconds);
-            Console.WriteLine("Split and Merge = {0} sec and {1}msec", sM.Seconds, sM.Milliseconds);
-            Console.WriteLine("Pyramidal = {0} sec and {1}msec", pyr.Seconds, pyr.Milliseconds);
-                            //Some result
-                            //bubble = 1 sec and 553msec
-                            //qSort = 0 sec and 8msec
-                            //Split and Merge = 0 sec and 5msec
-                            //Pyramidal = 0 sec and 9msec
+            FileServices.Copyfile(fileName, sortedFileName);
+            stopwatch.Restart();
+            FileServices.SortArrayInFile(sortedFileName);
+            stopwatch.Stop();
+            TimeSpan fileSort = stopwatch.Elapsed;
+            FileServices.ReadArrayFromFile(sortedFileName, out int[] sortedFileArray);
+            Console.WriteLine("Array from file");
+            for (int i = 0; i < sortedFileArray.Length; i++)
+            {
+                Console.Write("{0} ", sortedFileArray[i]);
+            }
+            Console.WriteLine();
+            Console.WriteLine("Time sort's result");
+            Console.WriteLine("bubble = {0} sec and {1} msec", bubble.Seconds, bubble.Milliseconds);
+            Console.WriteLine("qSort = {0} sec and {1} msec", qs.Seconds, qs.Milliseconds);
+            Console.WriteLine("Split and Merge = {0} sec and {1} msec", sM.Seconds, sM.Milliseconds);
+            Console.WriteLine("Pyramidal = {0} sec and {1} msec", pyr.Seconds, pyr.Milliseconds);
+            Console.WriteLine("sort in file = {0} sec and {1} msec", fileSort.Seconds, fileSort.Milliseconds);
+
+            //Time sort's result
+            //bubble = 1 sec and 500 msec
+            //qSort = 0 sec and 13 msec
+            //Split and Merge = 0 sec and 9 msec
+            //Pyramidal = 0 sec and 14 msec
+            //sort in file = 0 sec and 146 msec
         }
     }
 }
