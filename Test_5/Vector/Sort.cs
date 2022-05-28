@@ -46,10 +46,9 @@ namespace Vector
                 array[n + l] = temp[n];
             }
         }
-        static public int[] SplitMergeSort(ref int[] array)
+        static public void SplitMergeSort(ref int[] array)
         {
             SplitMergeSort(ref array, 0, array.Length);
-            return array;
         }
         static void SplitMergeSort(ref int[] array, int start, int end)
         {
