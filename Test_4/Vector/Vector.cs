@@ -39,6 +39,7 @@ namespace Vector
             }
             return true;
         }
+        //Без цього коду буде той самий результат
         public override int GetHashCode()
         {
             return base.GetHashCode();
@@ -112,6 +113,7 @@ namespace Vector
         public bool IsPoliand()
         {
             int lenght = array.Length;
+            // Одиничка лишня
             int middle = array.Length / 2 + 1;
             for (int i = 0; i < middle; i++)
             {
@@ -127,6 +129,7 @@ namespace Vector
             for (int i = 0; i < halfLenght; i++)
             {
                 temp = array[i];
+                //вихід за межі
                 array[i] = array[lenght - i];
                 array[lenght - 1] = temp;
             }
@@ -195,6 +198,7 @@ namespace Vector
         void QuickSort(int start, int end)
         {
             if (end - start < 1) return;
+            // Алгоритмічно є лишнє.
             int min = start, max = end;
             for (int i = start + 1; i <= end; i++)
             {
