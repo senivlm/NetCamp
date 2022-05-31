@@ -3,7 +3,7 @@
 namespace Vector
 {
     internal class Program
-    {
+    {//програма не перехоплює жодного винятку
         static void Main(string[] args)
         {
             Vector arr = new Vector(20);
