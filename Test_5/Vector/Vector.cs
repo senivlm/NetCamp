@@ -132,12 +132,9 @@ namespace Vector
         {
             int lenght = array.Length;
             int halfLenght = lenght / 2;
-            int temp = 0;
             for (int i = 0; i < halfLenght; i++)
             {
-                temp = array[i];
-                array[i] = array[lenght - i];
-                array[lenght - 1] = temp;
+                Swap(i, lenght - 1 - i);
             }
         }
         public Pair BiggestPair()
@@ -208,52 +205,21 @@ namespace Vector
             for (int i = start + 1; i <= end; i++)
             {
                 if (array[min] > array[i]) min = i;
-                if (array[max] < array[i - 1]) max = i;
+                if (array[max] < array[i - 1]) max = i-1;
             }
-            Swap(start, min);
-            Swap(end, max);
-            if (end - start > 2)
+            if (end - start >= 1)
             {
-                int middle = (array[end] - array[start]) / 2 + array[start];
-                int l = start + 1, r = end - 1;
+                if (array[min] == array[max]) return;
+                int middle = (array[min] + array[max]) / 2;
+                int l = start, r = end;
                 while (l < r)
                 {
                     while (array[l] <= middle && l < r) l++;
-                    while (array[r] >= middle && r > l) r--;
+                    while (array[r] > middle && r > l) r--;
                     if (l < r) Swap(l++, r--);
                 }
-                QuickSort(start + 1, l - 1);
-                QuickSort(l, end - 1);
-            }
-
-        }
-        public async Task QuickSortAsync()
-        {
-            await QuickSortAsync(0, array.Length - 1);
-        }
-        async Task QuickSortAsync(int start, int end)
-        {
-            if (end - start < 1) return;
-            int min = start, max = end;
-            for (int i = start + 1; i <= end; i++)
-            {
-                if (array[min] > array[i]) min = i;
-                if (array[max] < array[i - 1]) max = i;
-            }
-            Swap(start, min);
-            Swap(end, max);
-            if (end - start > 2)
-            {
-                int middle = (array[end] - array[start]) / 2 + array[start];
-                int l = start + 1, r = end - 1;
-                while (l < r)
-                {
-                    while (array[l] <= middle && l < r) l++;
-                    while (array[r] >= middle && r > l) r--;
-                    if (l < r) Swap(l++, r--);
-                }
-                await QuickSortAsync(start + 1, l - 1);
-                await QuickSortAsync(l, end - 1);
+                QuickSort(start , l-1);
+                QuickSort(l, end);
             }
         }
         void Swap(int n, int m)

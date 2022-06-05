@@ -27,7 +27,7 @@ namespace Vector
             {
                 int n = 10000;
                 arrBubble = new Vector(n);
-                arrBubble.InitRandom(1, 100);
+                arrBubble.InitRandom(1, 10);
                 int[] arr = new int[n];
                 for (int i = 0; i < n; i++)
                 {
@@ -75,13 +75,6 @@ namespace Vector
             Console.WriteLine("Split and Merge = {0} sec and {1} msec", sM.Seconds, sM.Milliseconds);
             Console.WriteLine("Pyramidal = {0} sec and {1} msec", pyr.Seconds, pyr.Milliseconds);
             Console.WriteLine("sort in file = {0} sec and {1} msec", fileSort.Seconds, fileSort.Milliseconds);
-
-            //Time sort's result
-            //bubble = 1 sec and 500 msec
-            //qSort = 0 sec and 13 msec
-            //Split and Merge = 0 sec and 9 msec
-            //Pyramidal = 0 sec and 14 msec
-            //sort in file = 0 sec and 146 msec
         }
     }
 }
