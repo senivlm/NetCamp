@@ -22,6 +22,11 @@ namespace Vector
                 array[i] = data[i];
             }
         }
+        public Vector(string filname)
+        {
+            if (!FileServices.ReadArrayFromFile(filname, out array))
+                throw new FileLoadException();
+        }
         public int this[int index]
         {
             get { return array[index]; }
@@ -205,7 +210,7 @@ namespace Vector
             for (int i = start + 1; i <= end; i++)
             {
                 if (array[min] > array[i]) min = i;
-                if (array[max] < array[i - 1]) max = i-1;
+                if (array[max] < array[i - 1]) max = i - 1;
             }
             if (end - start >= 1)
             {
@@ -218,7 +223,7 @@ namespace Vector
                     while (array[r] > middle && r > l) r--;
                     if (l < r) Swap(l++, r--);
                 }
-                QuickSort(start , l-1);
+                QuickSort(start, l - 1);
                 QuickSort(l, end);
             }
         }
@@ -305,6 +310,10 @@ namespace Vector
                 Swap(i, 0);
                 comparissionPyramidElem(0, i);
             }
+        }
+        public void SaveToFile(string fileName)
+        {
+            FileServices.WriteArrayToFile(fileName, array);
         }
     }
 }

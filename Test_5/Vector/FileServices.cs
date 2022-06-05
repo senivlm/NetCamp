@@ -12,7 +12,7 @@ namespace Vector
         enum FilePart { first, middle, second }
         public static void WriteArrayToFile(string fileName, int[] data)
         {
-            using (FileStream stream = new FileStream(fileName, FileMode.OpenOrCreate))
+            using (FileStream stream = new FileStream(fileName, FileMode.Create))
             {
                 foreach (var item in data)
                 {
@@ -42,43 +42,52 @@ namespace Vector
             }
             return true;
         }
-        public static void SortArrayInFile(string fileName)
+        public static void SplitFileInHalf(string filename, string firstSuffix = "1",
+            string secondSuffix = "2")
         {
-            FilePart[] order = new FilePart[] {
-                FilePart.first, FilePart.second, FilePart.middle,
-                FilePart.first, FilePart.second, FilePart.middle };
-            foreach (var part in order)
-                SortFilePart(fileName, part);
-        }
-        static void SortFilePart(string fileName, FilePart part)
-        {
-            try
+            using (FileStream stream = new FileStream(filename, FileMode.Open))
+            using (FileStream streamFirst = new FileStream(filename + firstSuffix, FileMode.Create))
+            using (FileStream streamSecond = new FileStream(filename + secondSuffix, FileMode.Create))
             {
-                using (FileStream stream = new FileStream(fileName, FileMode.Open))
+                long half = stream.Length / 2;
+                byte[] bytes = new byte[half];
+                stream.Read(bytes, 0, bytes.Length);
+                streamFirst.Write(bytes, 0, bytes.Length);
+                bytes = new byte[stream.Length - half];
+                stream.Read(bytes, 0, bytes.Length);
+                streamSecond.Write(bytes, 0, bytes.Length);
+            }
+        }
+        public static void MergeAndSortTwoArrayFiles(string filename, string firstSuffix = "1",
+            string secondSuffix = "2")
+        {
+            ReadArrayFromFile(filename + firstSuffix, out int[] firstVals);
+            ReadArrayFromFile(filename + secondSuffix, out int[] secondVals);
+            using (FileStream stream = new FileStream(filename, FileMode.Open))
+            {
+                int first = 0, second = 0;
+                int val = 0;
+                while (first < firstVals.Length || second < secondVals.Length)
                 {
-                    int lenght = (int)stream.Length / 2 + 1;
-                    int start = 0;
-                    if (part == FilePart.middle)
+                    if (first == firstVals.Length)
                     {
-                        start = lenght / 2;
+                        val = secondVals[second++];
                     }
-                    else if (part == FilePart.second)
+                    else if (second == secondVals.Length)
                     {
-                        start = lenght;
-                        lenght = (int)stream.Length - lenght;
+                        val = firstVals[first++];
                     }
-                    byte[] bytes = new byte[lenght];
-                    int[] data = new int[lenght];
-                    stream.Position = start;
-                    stream.Read(bytes, 0, lenght);
-                    data = bytes.Select(b => (int)b).ToArray();
-                    Sort.SplitMergeSort(ref data);
-                    bytes = data.Select(d => (byte)d).ToArray();
-                    stream.Position = start;
-                    stream.Write(bytes, 0, lenght);
+                    else if (firstVals[first] > secondVals[second])
+                    {
+                        val = firstVals[first++];
+                    }
+                    else
+                    {
+                        val = secondVals[second++];
+                    }
+                    stream.WriteByte((byte)val);
                 }
             }
-            catch { }
         }
         public static void Copyfile(string sourceFileName, string destinationFileName)
         {

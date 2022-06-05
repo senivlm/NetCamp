@@ -27,7 +27,7 @@ namespace Vector
             {
                 int n = 10000;
                 arrBubble = new Vector(n);
-                arrBubble.InitRandom(1, 10);
+                arrBubble.InitRandom(1, 100);
                 int[] arr = new int[n];
                 for (int i = 0; i < n; i++)
                 {
@@ -38,8 +38,9 @@ namespace Vector
                 arrPyr = new Vector(arr);
                 FileServices.WriteArrayToFile(fileName, arr);
             }
-            Console.WriteLine("Unsorted array");
-            Console.WriteLine(arrBubble);
+            //Console.WriteLine("Unsorted array");
+            //Console.WriteLine(arrBubble);
+            Console.WriteLine("Sorted timing results");
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
             arrBubble.Bubble();
@@ -49,6 +50,11 @@ namespace Vector
             arrQS.QuickSort();
             stopwatch.Stop();
             TimeSpan qs = stopwatch.Elapsed;
+            SortInFile sortInFile = new SortInFile();
+            stopwatch.Restart();
+            sortInFile.Sort(fileName, sortedFileName);
+            stopwatch.Stop();
+            TimeSpan fileSort = stopwatch.Elapsed;
             stopwatch.Restart();
             arrSM.SplitMergeSort();
             stopwatch.Stop();
@@ -57,17 +63,7 @@ namespace Vector
             arrPyr.PyramidalSort();
             stopwatch.Stop();
             TimeSpan pyr = stopwatch.Elapsed;
-            FileServices.Copyfile(fileName, sortedFileName);
-            stopwatch.Restart();
-            FileServices.SortArrayInFile(sortedFileName);
-            stopwatch.Stop();
-            TimeSpan fileSort = stopwatch.Elapsed;
-            FileServices.ReadArrayFromFile(sortedFileName, out int[] sortedFileArray);
-            Console.WriteLine("Array from file");
-            for (int i = 0; i < sortedFileArray.Length; i++)
-            {
-                Console.Write("{0} ", sortedFileArray[i]);
-            }
+            FileServices.SplitFileInHalf(fileName);
             Console.WriteLine();
             Console.WriteLine("Time sort's result");
             Console.WriteLine("bubble = {0} sec and {1} msec", bubble.Seconds, bubble.Milliseconds);
