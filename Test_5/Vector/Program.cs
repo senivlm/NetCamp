@@ -36,11 +36,14 @@ namespace Vector
                 arrQS = new Vector(arr);
                 arrSM = new Vector(arr);
                 arrPyr = new Vector(arr);
-                FileServices.WriteArrayToFile(fileName, arr);
+                try
+                {
+                    FileServices.WriteArrayToFile(fileName, arr);
+                }
+                catch (Exception ex) { Console.WriteLine(ex.ToString()); }
             }
             //Console.WriteLine("Unsorted array");
             //Console.WriteLine(arrBubble);
-            Console.WriteLine("Sorted timing results");
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
             arrBubble.Bubble();
@@ -52,7 +55,14 @@ namespace Vector
             TimeSpan qs = stopwatch.Elapsed;
             SortInFile sortInFile = new SortInFile();
             stopwatch.Restart();
-            sortInFile.Sort(fileName, sortedFileName);
+            try
+            {
+                sortInFile.Sort(fileName, sortedFileName);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
             stopwatch.Stop();
             TimeSpan fileSort = stopwatch.Elapsed;
             stopwatch.Restart();
@@ -65,7 +75,7 @@ namespace Vector
             TimeSpan pyr = stopwatch.Elapsed;
             FileServices.SplitFileInHalf(fileName);
             Console.WriteLine();
-            Console.WriteLine("Time sort's result");
+            Console.WriteLine("Sort timing results");
             Console.WriteLine("bubble = {0} sec and {1} msec", bubble.Seconds, bubble.Milliseconds);
             Console.WriteLine("qSort = {0} sec and {1} msec", qs.Seconds, qs.Milliseconds);
             Console.WriteLine("Split and Merge = {0} sec and {1} msec", sM.Seconds, sM.Milliseconds);
