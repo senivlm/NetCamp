@@ -2,11 +2,11 @@
 using System.Diagnostics;
 
 namespace Vector
-{
+{//Ваш номер 18.
     internal class Program
     {
         static  void Main(string[] args)
-        {
+        {//Для заміру часу треба значно серйозніші розміри!!
             int n = 2000;                      //Bubble against QuickSort
             Vector arr = new Vector(n);
             Vector arr2 = new Vector(n);
