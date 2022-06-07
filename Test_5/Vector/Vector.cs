@@ -283,6 +283,7 @@ namespace Vector
             if (end - start <= 1) return;
             int middle = (end + start) / 2;
             SplitMergeSort(start, middle);
+          
             SplitMergeSort(middle, end);
             Merge(start, middle, end);
         }
@@ -293,7 +294,7 @@ namespace Vector
             if (l < lenght && array[l] > array[max]) max = l;
             if (r < lenght && array[r] > array[max]) max = r;
             if (max != elem)
-            {
+            {// можна також міняти через кортеж
                 Swap(max, elem);
                 comparissionPyramidElem(max, lenght);
             }
