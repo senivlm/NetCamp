@@ -14,6 +14,7 @@ namespace Vector
                 throw new ArgumentNullException();
             if (!destinationFile.Equals(sourceFile)) FileServices.Copyfile(sourceFile, destinationFile);
             FileServices.SplitFileInHalf(destinationFile);
+            //Краще тут ручками вийняти ім'я файлу без розширення і до нього додати індекс.
             Vector vector = new Vector(destinationFile + "1");
             vector.QuickSort();
             vector.SaveToFile(destinationFile + "1");
