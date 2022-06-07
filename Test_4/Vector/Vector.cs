@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Vector
-{
+{// не бачу реалізації для різних опорних елементів
     internal class Vector
     {
         int[] array;
@@ -208,7 +208,7 @@ namespace Vector
                 int middle = (array[end] - array[start]) / 2 + array[start];
                 int l = start + 1, r = end - 1;
                 while (l < r)
-                {
+                {// умови треба поміняти місцями
                     while (array[l] <= middle && l < r) l++;
                     while (array[r] >= middle && r > l) r--;
                     if (l < r) Swap(l++, r--);
