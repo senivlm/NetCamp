@@ -60,7 +60,7 @@ namespace Vector
         }
         public static void MergeAndSortTwoArrayFiles(string filename, string firstSuffix = "1",
             string secondSuffix = "2")
-        {
+        {//два одночасно масиви не можна використовувати. не вистачає оперативки за умовою.
             ReadArrayFromFile(filename + firstSuffix, out int[] firstVals);
             ReadArrayFromFile(filename + secondSuffix, out int[] secondVals);
             using (FileStream stream = new FileStream(filename, FileMode.Open))
