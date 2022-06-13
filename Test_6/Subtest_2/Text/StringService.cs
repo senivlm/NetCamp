@@ -10,7 +10,7 @@ namespace Text
     {
         string[][] words;
         public StringService(string fileName)
-        {
+        {//Якщо файл великий, програма не працюватиме
             string text = FileService.ReadTXTFile(fileName);
             string[] sentences = SplitToSentences(text);
             words = new string[sentences.Length][];
@@ -79,6 +79,7 @@ namespace Text
         string GetShortestAndLongest(string[] sentences)
         {
             char[] punctuations = new char[] { ',', ':', '-', ';', '.', '!', '?'};
+            //Добра реалізація.
             string shortest = sentences[0].TrimEnd(punctuations);
             string longest = shortest;
             for (int i = 1; i < sentences.Length; i++)
