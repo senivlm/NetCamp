@@ -6,7 +6,7 @@ namespace Energo
     internal class Program
     {
         static void Main(string[] args)
-        {
+        {//не побачила результуючого файлу
             AppartmensService appartmensService = new AppartmensService(@"..\..\..\data.txt");
             if (appartmensService.Errors.Length > 0)
             {
