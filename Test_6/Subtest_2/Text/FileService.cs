@@ -10,7 +10,7 @@ namespace Text
     static internal class FileService
     {
         public static string ReadTXTFile(string fileName)
-        {
+        {// Зливати в одну стрічку не можна було.
             string res = string.Empty;
             using (StreamReader reader = new StreamReader(fileName))
             {
