@@ -6,7 +6,7 @@ using System.Linq;
 namespace Energo
 {
     internal class AppartmensService
-    {
+    {// Де форматовано виводиться сама таблиця даних.
         List<Appartment> appartments;
         int quarter;
         public int Quarter { get => quarter; }
