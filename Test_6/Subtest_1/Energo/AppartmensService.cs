@@ -111,7 +111,7 @@ namespace Energo
             return res;
         }
         public string GetAppartmentsWhichDidnotGetElectricity()
-        {
+        {//Добре, що освоюєте linq
             List<Appartment> resAppartments = appartments.Where(ap => ap.endCounter == ap.startCounter).ToList();
             string res = string.Empty;
             if (resAppartments.Any())
