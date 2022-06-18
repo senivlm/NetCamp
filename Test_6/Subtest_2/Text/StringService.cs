@@ -11,61 +11,62 @@ namespace Text
         string[][] words;
         public StringService(string fileName)
         {
-            string text = FileService.ReadTXTFile(fileName);
-            string[] sentences = SplitToSentences(text);
+            string[] sentences = FileService.ReadSentencessFromTXTFile(fileName);
             words = new string[sentences.Length][];
             for (int i = 0; i < sentences.Length; i++)
             {
                 words[i] = SplitSentence(sentences[i]);
             }
         }
-        public override string ToString()
+        public List<string> ToStringSentencess()
         {
-            string text = string.Empty;
+            List<string> sentencess = new List<string>();
             for (int i = 0; i < words.Length; i++)
             {
-                if (i != 0) text += "\r\n";
+                string sentence = string.Empty;
                 for (int j = 0; j < words[i].Length; j++)
                 {
-                    text += String.Format("{0}{1}", j == 0 ? '\t' : ' ', words[i][j]);
-
+                    sentence += String.Format("{0}{1}", j == 0 ? '\t' : ' ', words[i][j]);
                 }
+                sentencess.Add(sentence);
             }
-            return text;
+            return sentencess;
         }
         public void SaveToFile(string filename)
         {
-            FileService.SaveToFile(filename, this.ToString());
+            FileService.SaveToFile(filename, this.ToStringSentencess());
         }
         string[] SplitSentence(string str)
         {
             return str.Split(" ", StringSplitOptions.RemoveEmptyEntries);
         }
-        string[] SplitToSentences(string str)
+        public static List<string> SplitToSentences(string str, out string rest)
         {
             List<string> res = new List<string>();
-            str = str.Replace("\r\n", " ");
+            rest = string.Empty;
+            if (String.IsNullOrWhiteSpace(str)) return res;
+            str = str + " ";
             int endPos = str.Length;
             int startPos = 0;
             while (startPos < endPos)
             {
                 int pt1 = str.IndexOf(". ", startPos);
-                if (pt1 < 0) pt1 = endPos;
+                if (pt1 < 0) pt1 = endPos + 1;
                 int quest = str.IndexOf("?", startPos);
-                if (quest < 0) quest = endPos;
+                if (quest < 0) quest = endPos + 1;
                 int exclam = str.IndexOf("!", startPos);
-                if (exclam < 0) exclam = endPos;
+                if (exclam < 0) exclam = endPos + 1;
                 int min = Math.Min(pt1, quest < exclam ? quest : exclam);
-                if (min == endPos)
+                if (min == endPos + 1)
                 {
                     string st = str.Substring(startPos, endPos - startPos);
-                    if (!string.IsNullOrWhiteSpace(st)) res.Add(st);
-                    break;
+                    if (!string.IsNullOrWhiteSpace(st)) rest = st;
+                    return res;
                 }
                 res.Add(str.Substring(startPos, min - startPos + 1));
                 startPos = min + 1;
             }
-            return res.ToArray();
+            return res;
         }
         public string GetShortestLongesrSententcesesWords()
         {
@@ -78,7 +79,7 @@ namespace Text
         }
         string GetShortestAndLongest(string[] sentences)
         {
-            char[] punctuations = new char[] { ',', ':', '-', ';', '.', '!', '?'};
+            char[] punctuations = new char[] { ',', ':', '-', ';', '.', '!', '?', '(', ')' };
             string shortest = sentences[0].TrimEnd(punctuations);
             string longest = shortest;
             for (int i = 1; i < sentences.Length; i++)

@@ -4,10 +4,12 @@ namespace Text
 {
     internal class Program
     {
+        //Тепер програма читає великі текстові файли
         static void Main(string[] args)
         {
             string sourceFileName = @"../../../Data.txt";
             string destFileName = @"../../../Result.txt";
+
             StringService stringService = null;
             try
             {

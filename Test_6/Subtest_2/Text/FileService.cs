@@ -9,21 +9,30 @@ namespace Text
 {
     static internal class FileService
     {
-        public static string ReadTXTFile(string fileName)
+        public static string[] ReadSentencessFromTXTFile(string fileName)
         {
-            string res = string.Empty;
+            List<string> sentencess = new List<string>();
             using (StreamReader reader = new StreamReader(fileName))
             {
-
-                res = reader.ReadToEnd();
+                string endString = string.Empty;
+                while (reader.Peek() > 0)
+                {
+                    string line = reader.ReadLine();
+                    if (!string.IsNullOrEmpty(endString)) line = endString + line;
+                    List<string> stringSentencess = StringService.SplitToSentences(line, out endString);
+                    if (stringSentencess.Count > 0) sentencess.AddRange(stringSentencess);
+                }
             }
-            return res;
+            return sentencess.ToArray();
         }
-        public static void SaveToFile(string fileName, string data)
+        public static void SaveToFile(string fileName, List<string> data)
         {
-            using(StreamWriter stream = new StreamWriter(fileName))
+            using (StreamWriter stream = new StreamWriter(fileName))
             {
-                stream.Write(data);
+                foreach (string line in data)
+                {
+                    stream.WriteLine(line);
+                }
             }
         }
     }
