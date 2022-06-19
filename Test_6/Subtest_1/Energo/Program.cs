@@ -8,7 +8,11 @@ namespace Energo
     {
         static void Main(string[] args)
         {
+            //Я додав форматування таблиці, її можна робити ширше. Ширина прописана у Settings.
+            //
+            //додів запис у файл
             AppartmensService appartmensService = new AppartmensService(@"..\..\..\data.txt");
+            string fileResult = @"..\..\..\result.txt";
             if (appartmensService.Errors.Length > 0)
             {
                 Console.WriteLine($"Errors:{appartmensService.Errors}");
@@ -16,6 +20,14 @@ namespace Energo
             }
             appartmensService.SortByAppartmentName();
             Console.WriteLine(appartmensService);
+            try
+            {
+                FileService.SaveListToFile(fileResult, appartmensService.ToListString());
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
             Console.WriteLine("Get appartment 2");
             Console.WriteLine(appartmensService.GetByNumber(2));
             Console.WriteLine("Get the biggest debtor");

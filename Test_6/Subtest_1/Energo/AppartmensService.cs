@@ -70,12 +70,24 @@ namespace Energo
         public override string ToString()
         {
             string result = string.Empty;
+            List<string> strings = ToListString();
+            foreach(string str in strings)
+            {
+                result += $"{str}\r\n";
+            }
+            return result;
+        }
+        public List<string> ToListString()
+        {
+            List<string> result = new();
             string line = FormatterService.GetRowLine();
-            result += line + "\r\n" + FormatterService.GetTabbleHeader() + "\r\n" + line + "\r\n";
+            result.Add(line);
+            result.Add(FormatterService.GetTabbleHeader());
+            result.Add(line);
             foreach (Appartment appartment in appartments)
             {
-                int t = appartment.ToString().Length;
-                result += $"{appartment}\r\n{line}\r\n";
+                result.Add(appartment.ToString());
+                result.Add(line);
             }
             return result;
         }
