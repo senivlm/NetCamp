@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace Energo
@@ -13,9 +14,7 @@ namespace Energo
                 Console.WriteLine($"Errors:{appartmensService.Errors}");
 
             }
-            Console.WriteLine(appartmensService);
             appartmensService.SortByAppartmentName();
-            Console.WriteLine("Sorted list");
             Console.WriteLine(appartmensService);
             Console.WriteLine("Get appartment 2");
             Console.WriteLine(appartmensService.GetByNumber(2));

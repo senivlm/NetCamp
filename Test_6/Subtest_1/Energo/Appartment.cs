@@ -74,13 +74,18 @@ namespace Energo
         }
         public override string ToString()
         {
-            string dates = "";
+            List<string> data = new List<string>
+            {
+                Number.ToString(),
+                FIO,
+                startCounter.ToString(),
+                endCounter.ToString()
+            };
             foreach (DateTime date in counterReadingDates)
             {
-                dates += $"{date.ToLongDateString()}\t";
+                data.Add(date.ToString("dd MMMM"));
             }
-            return string.Format("{0}\t{1}\t{2}\t{3}\t{4}",
-                Number, FIO, startCounter, endCounter, dates);
+            return FormatterService.GetTabbleRowl(data);
         }
     }
 }

@@ -70,9 +70,12 @@ namespace Energo
         public override string ToString()
         {
             string result = string.Empty;
+            string line = FormatterService.GetRowLine();
+            result += line + "\r\n" + FormatterService.GetTabbleHeader() + "\r\n" + line + "\r\n";
             foreach (Appartment appartment in appartments)
             {
-                result += $"{appartment}\r\n";
+                int t = appartment.ToString().Length;
+                result += $"{appartment}\r\n{line}\r\n";
             }
             return result;
         }
