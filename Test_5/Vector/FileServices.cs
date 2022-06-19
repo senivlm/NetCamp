@@ -42,12 +42,12 @@ namespace Vector
             }
             return true;
         }
-        public static void SplitFileInHalf(string filename, string firstSuffix = "1",
-            string secondSuffix = "2")
+        public static void SplitFileInHalf(string filename, string firstFileName = "tmp1",
+            string secondFileName = "tmp2")
         {
             using (FileStream stream = new FileStream(filename, FileMode.Open))
-            using (FileStream streamFirst = new FileStream(filename + firstSuffix, FileMode.Create))
-            using (FileStream streamSecond = new FileStream(filename + secondSuffix, FileMode.Create))
+            using (FileStream streamFirst = new FileStream(firstFileName, FileMode.Create))
+            using (FileStream streamSecond = new FileStream(secondFileName, FileMode.Create))
             {
                 long half = stream.Length / 2;
                 byte[] bytes = new byte[half];
@@ -58,36 +58,48 @@ namespace Vector
                 streamSecond.Write(bytes, 0, bytes.Length);
             }
         }
-        public static void MergeAndSortTwoArrayFiles(string filename, string firstSuffix = "1",
-            string secondSuffix = "2")
+        public static void MergeAndSortTwoArrayFiles(string filename, bool ordedAscending,
+            string firstFileName = "tmp1", string secondFileName = "tmp2")
         {
-            ReadArrayFromFile(filename + firstSuffix, out int[] firstVals);
-            ReadArrayFromFile(filename + secondSuffix, out int[] secondVals);
             using (FileStream stream = new FileStream(filename, FileMode.Open))
+            using (FileStream streamFirst = new FileStream(firstFileName, FileMode.Open))
+            using (FileStream streamSecond = new FileStream(secondFileName, FileMode.Open))
             {
-                int first = 0, second = 0;
-                int val = 0;
-                while (first < firstVals.Length || second < secondVals.Length)
+                bool canReadFirst = streamFirst.CanRead;
+                bool canReadsecond = streamSecond.CanRead;
+                int? firstVal = null, secondVal = null;
+                while (stream.Position < streamFirst.Length + streamSecond.Length)
                 {
-                    if (first == firstVals.Length)
+                    if (firstVal == null && streamFirst.Position < streamFirst.Length) firstVal = streamFirst.ReadByte();
+                    if (secondVal == null && streamSecond.Position < streamSecond.Length) secondVal = streamSecond.ReadByte();
+                    if (firstVal == null)
                     {
-                        val = secondVals[second++];
+                        stream.WriteByte((byte)secondVal);
+                        secondVal = null;
                     }
-                    else if (second == secondVals.Length)
+                    else if (secondVal == null)
                     {
-                        val = firstVals[first++];
+                        stream.WriteByte((byte)firstVal);
+                        firstVal = null;
                     }
-                    else if (firstVals[first] > secondVals[second])
+                    else if (firstVal < secondVal ^ ordedAscending)
                     {
-                        val = firstVals[first++];
+                        stream.WriteByte((byte)secondVal);
+                        secondVal = null;
                     }
                     else
                     {
-                        val = secondVals[second++];
+                        stream.WriteByte((byte)firstVal);
+                        firstVal = null;
                     }
-                    stream.WriteByte((byte)val);
                 }
             }
+            try
+            {
+                File.Delete(firstFileName);
+                File.Delete(secondFileName);
+            }
+            catch { }
         }
         public static void Copyfile(string sourceFileName, string destinationFileName)
         {

@@ -199,11 +199,11 @@ namespace Vector
                 }
             }
         }
-        public void QuickSort()
+        public void QuickSort(bool ordedAscending = true)
         {
-            QuickSort(0, array.Length - 1);
+            QuickSort(0, array.Length - 1, ordedAscending);
         }
-        void QuickSort(int start, int end)
+        void QuickSort(int start, int end, bool ordedAscending = true)
         {
             if (end - start < 1) return;
             int min = start, max = end;
@@ -219,12 +219,16 @@ namespace Vector
                 int l = start, r = end;
                 while (l < r)
                 {
-                    while (array[l] <= middle && l < r) l++;
-                    while (array[r] > middle && r > l) r--;
-                    if (l < r) Swap(l++, r--);
+                    while ((array[l] > middle ^ ordedAscending) && l < r) l++;
+                    while ((array[r] <= middle ^ ordedAscending) && r > l) r--;
+                    if (l < r)
+                    {
+                        Swap(l++, r);
+                        if (l -r>2) r--;
+                    }
                 }
-                QuickSort(start, l - 1);
-                QuickSort(l, end);
+                QuickSort(start, l - 1,ordedAscending);
+                QuickSort(l, end,ordedAscending);
             }
         }
         void Swap(int n, int m)
