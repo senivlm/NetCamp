@@ -21,6 +21,7 @@ namespace Product
                 throw new ArgumentException("Wrong Date");
             return GetLoggsFromDate(dt);
         }
+        // Я б не дозволяла такий параметр за замовчуванням
         public static List<string> GetLoggsFromDate(DateTime? date = null)
         {
             List<string> loggs = FileService.GetStringsFromFile(Settings.ErrorLogFile);
