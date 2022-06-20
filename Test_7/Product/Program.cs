@@ -5,7 +5,7 @@ using System.IO;
 namespace Product
 {
     internal class Program
-    {
+    {//Не знайшла 8.
         static void Main(string[] args)
         {
 
@@ -20,6 +20,7 @@ namespace Product
             Console.WriteLine("Enter file name to load storage");
             Storage loaded = null;
             int tryCount = 3;
+            //Подумайте, де місце цьому коду.
             while (tryCount > 0)
             {
                 try
