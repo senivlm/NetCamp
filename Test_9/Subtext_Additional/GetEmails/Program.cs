@@ -12,6 +12,11 @@ namespace GetEmails
             Console.WriteLine("Emails:");
             foreach (string email in emails)
                 Console.WriteLine(email);
+            Console.WriteLine();
+            List<string> emails1= SearchService.GetEmailsFromFile(fileName,false);
+            Console.WriteLine("Emails 2:");
+            foreach (string email in emails)
+                Console.WriteLine(email);
         }
     }
 }
