@@ -43,7 +43,7 @@ namespace GetEmails
             int position = 0;
             while (position < dataStr.Length)
             {
-                if ((position = dataStr.IndexOf("@", position+1)) == -1) break;
+                if ((position = dataStr.IndexOf("@", position + 1)) == -1) break;
                 int startPos = position, endPos = position;
                 while (startPos > 0)
                 {
@@ -59,18 +59,8 @@ namespace GetEmails
                 }
                 while (endPos < dataStr.Length - 1)
                 {
-                    char ch= dataStr[endPos + 1];
-                    if (char.IsLetter(dataStr[startPos + 1]))
-                    {
-
-                    }
-                    if (char.IsDigit(dataStr[endPos + 1]))
-                    { 
-                    }
-                    if ('.'.Equals(dataStr[endPos + 1]) && endPos != position + 1) 
-                    { }
-                        if (char.IsLetter(dataStr[endPos + 1]) || char.IsDigit(dataStr[endPos + 1]) ||
-                       ('.'.Equals(dataStr[endPos + 1]) && endPos != position+1))
+                    if (char.IsLetter(dataStr[endPos + 1]) || char.IsDigit(dataStr[endPos + 1]) ||
+                   ('.'.Equals(dataStr[endPos + 1]) && endPos != position + 1))
                     {
                         endPos++;
                     }
