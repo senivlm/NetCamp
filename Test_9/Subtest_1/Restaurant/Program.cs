@@ -27,7 +27,7 @@ namespace Restaurant
                 Console.WriteLine("Menu successfully calculated and writed to file.");
             }
             catch (Exception ex)
-            {
+            {// Користувачу слід було вказати продукти, які не мали цінника
                 Console.WriteLine(ex.Message);
             }
             Console.ReadLine();
