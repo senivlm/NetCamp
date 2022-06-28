@@ -16,6 +16,7 @@ namespace Restaurant.Services
             ingridients = new();
             for (int i = 0; i < menu.Length; i++)
             {
+                // розкажіть свою ідею на занятті. Так, як Ви, ніхто не робив.
                 if (!TryGetDishPrice(menu[i], ref priceKurant, ref ingridients,
                     out double sumPrice))
                 {
