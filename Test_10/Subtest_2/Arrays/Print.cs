@@ -16,7 +16,7 @@ namespace Arrays
             for (int i = 0; i < height; i++)
             {
                 for (int j = 0; j < width; j++)
-                {
+                {// Нестандартне форматування. 
                     res += String.Format("{0} {1}",array[i, j], array[i, j] < 10 ? " " : "");
                 }
                 res +="\n";
