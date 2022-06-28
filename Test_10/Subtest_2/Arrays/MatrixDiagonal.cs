@@ -28,6 +28,7 @@ namespace Arrays
             for (int indexer = 1; indexer <= lenght; indexer++)
             {
                 yield return matrix[i, j];
+                // можна відділити логіку заповнення
                 if (i == row - 1 && decrement == 1)
                 {
                     j++;
