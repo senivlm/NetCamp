@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Translater.Services
 {
     internal class UserService
-    {
+    {// Пам'ятайте, що роздрібнення сервісів є актуальне, якщо програмеі елементи можуть використовуватись в різних комбінаціях. Ціль визначає структуру програми.
         public static bool TryAskUser(string word,out string translated)
         {
             translated=string.Empty;
