@@ -22,7 +22,7 @@ namespace ProductsApp.Services
         {
             try
             {
-                FileService.AddStringToFile(fileName, $"{product}\r\n", true);
+                FileService.AddStringToFile(fileName, $"{DateTime.Now} {product}\r\n", true);
             }
             catch (Exception ex)
             {
