@@ -36,6 +36,7 @@ namespace Restaurant.Services
                 if (!priceKurant.TryGetProductPrice(key, out double poductPrice))
                 {
                     if (!TryCorrectPrice(key, out poductPrice)) throw new ArgumentNullException($"We have no price for {key}");
+                    if (!priceKurant.TryAddProductPrice(key, poductPrice)) throw new ArgumentNullException($"We have no price for {key}");
                 }
                 AddIngridients(key, dish[key], ref ingridients);
                 sumPrice += poductPrice * dish[key] / 1000;

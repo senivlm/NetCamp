@@ -10,6 +10,7 @@ namespace Restaurant.Services
 {
     internal static class PriceService
     {
+        public delegate void AddPriceToFile(string name, double price, string fileName);
         public static Dictionary<string, double> Load(string fileName)
         {
             Dictionary<string, double> priceKurants = new Dictionary<string, double>();
@@ -32,8 +33,13 @@ namespace Restaurant.Services
             if (position <= 0) return false;
             name = data.Substring(0, position).Trim();
             Regex regex = new Regex(@"\d+\.\d+|\d+\,\d+|\d+");
-            string priceStr = regex.Match(data.Substring(position + 1)).Value.Replace(',','.');
+            string priceStr = regex.Match(data.Substring(position + 1)).Value.Replace(',', '.');
             return double.TryParse(priceStr, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out price);
+        }
+        public static void SavePriceToFile(string name, double price, string fileName)
+        {
+            List<string> str = new() { $"{name} - {price}" };
+            FileService.SaveStrings(fileName, str, true);
         }
     }
 }

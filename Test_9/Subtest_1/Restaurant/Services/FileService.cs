@@ -22,9 +22,9 @@ namespace Restaurant.Services
             }
             return result.ToArray();
         }
-        public static void SaveStrings(string fileName, List<string> data)
+        public static void SaveStrings(string fileName, List<string> data, bool append = false)
         {
-            using (StreamWriter stream = new StreamWriter(fileName))
+            using (StreamWriter stream = new StreamWriter(fileName, append))
             {
                 foreach (string line in data)
                 {
