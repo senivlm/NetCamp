@@ -196,10 +196,6 @@ namespace ProductsApp.Models
         }
         public void SaveToFile(string fileName)
         {
-            SaveToFile(fileName, this.products);
-        }
-        public void SaveToFile(string fileName, List<Product> products)
-        {
             string productsStr = string.Empty;
             foreach (Product product in products)
             {
