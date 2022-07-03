@@ -61,17 +61,17 @@ namespace StringCalc
         private void Menu1()
         {
             Calculator calculator = new();
-            string formula = "1+2.1(3 + .4) * 5=";
-            //try
-            //{
-            //    PrintService.Print($"Формула - {formula} = {calculator.Calculate(formula)}");
-            //}
-            //catch (Exception ex) { PrintService.PrintAllert(ex.Message); }
-            //PrintService.Print("");
+            string formula = "max( 1 2.51)*(3 + 0.4) * 5";
+            try
+            {
+                PrintService.Print($"Формула - {formula} = {calculator.Calculate(formula).ToString("0.###")}");
+            }
+            catch (Exception ex) { PrintService.PrintAllert(ex.Message); }
+            PrintService.Print("");
             formula = "cos((0.14 +3)* 2)+2";
             try
             {
-                PrintService.Print($"Формула - {formula} = {calculator.Calculate(formula)}");
+                PrintService.Print($"Формула - {formula} = {calculator.Calculate(formula).ToString("0.###")}");
             }
             catch (Exception ex) { PrintService.PrintAllert(ex.Message); }
         }

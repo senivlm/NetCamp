@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -68,12 +69,24 @@ namespace StringCalc
                     List<string> funcFormula = CalculateFunction(funcName, funcArguments);
                     foreach (string formula in funcFormula) res.Add(formula);
                 }
-                else if (!(operations.Count > 0
+
+                else if (Settings.OperationPriority.ContainsKey(data[i]) && !(operations.Count > 0
                    && Settings.OperationPriority[data[i]] < Settings.OperationPriority[operations.Peek()]))
                 {
                     operations.Push(data[i]);
                 }
-
+                else if (IsMathOperation(data[i]))
+                {
+                    string funcName = data[i++];
+                    if (!data[i].Equals("(")) throw new ArgumentException($"невiрно визвана шункцiя \"{funcName}\"");
+                    i++;
+                    List<double> funcArguments = new();
+                    while (!data[i].Equals(")"))
+                    {
+                        funcArguments.Add(double.Parse(data[i++], NumberStyles.Number, CultureInfo.InvariantCulture));
+                    }
+                    res.Add(CalculateMathOperation(funcName, funcArguments).ToString().Replace(",", "."));
+                }
                 else if (operations.Count > 0)
                 {
                     while (operations.Count > 0 &&
@@ -140,8 +153,29 @@ namespace StringCalc
                 case "cos":
                     data.Push(Math.Cos(data.Pop()));
                     break;
-                default: throw new ArgumentException("невiдомий оператор");
             }
+        }
+        private double CalculateMathOperation(string operationName, List<double> data)
+        {
+            operationName = char.ToUpper(operationName[0]) + operationName.Substring(1);
+            Type? myType = typeof(Math);
+            MethodInfo[] methods = myType.GetMethods();
+            MethodInfo? method = methods.ToList().Where(m => m.Name.Equals(operationName)
+                    && m.ReturnType == typeof(double)).FirstOrDefault();
+            if (method == null) throw new ArgumentException("Wrong function Name");
+            int paramCount = method.GetParameters().Length;
+            if (paramCount != data.Count) throw new ArgumentException($"uncorrect parameters count in function {operationName}");
+            object[] methodParams = new object[paramCount];
+            for (int i = 0; i < paramCount; i++) methodParams[i] = data[i];
+            return (double)method.Invoke(null, methodParams);
+        }
+        private bool IsMathOperation(string name)
+        {
+            string operationName = char.ToUpper(name[0]) + name.Substring(1);
+            Type? myType = typeof(Math);
+            MethodInfo[] methods = myType.GetMethods();
+            return methods.ToList().Where(m => m.Name.Equals(operationName)
+                    && m.ReturnType == typeof(double)).FirstOrDefault() != null;
         }
         public void AddFunction(string name, string function)
         {
