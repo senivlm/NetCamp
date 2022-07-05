@@ -21,7 +21,7 @@ namespace StringCalc
         private List<string> ToList(string str)
         {
             List<string> res = new();
-            str = str.Replace(",", ".").ToLower();
+            str = str.Replace(", ",";").Replace(",", ".").ToLower();
             Regex regex = new Regex(@"(\d+(?:[.]\d+)?)|(\w+)|(\S)");
             MatchCollection regexRes = regex.Matches(str);
             foreach (Match m in regexRes) res.Add(m.Value);
@@ -56,6 +56,7 @@ namespace StringCalc
                         res.Add(func);
                     }
                 }
+                else if (data[i].Equals(";")) { }
                 else if (functionNames.Count > 0 && functionNames.Contains(data[i]))
                 {
                     string funcName = data[i++];
@@ -77,15 +78,8 @@ namespace StringCalc
                 }
                 else if (IsMathOperation(data[i]))
                 {
-                    string funcName = data[i++];
-                    if (!data[i].Equals("(")) throw new ArgumentException($"невiрно визвана шункцiя \"{funcName}\"");
-                    i++;
-                    List<double> funcArguments = new();
-                    while (!data[i].Equals(")"))
-                    {
-                        funcArguments.Add(double.Parse(data[i++], NumberStyles.Number, CultureInfo.InvariantCulture));
-                    }
-                    res.Add(CalculateMathOperation(funcName, funcArguments).ToString().Replace(",", "."));
+                    operations.Push(data[i]);
+                    AddMathFunction(data[i]);
                 }
                 else if (operations.Count > 0)
                 {
@@ -153,9 +147,12 @@ namespace StringCalc
                 case "cos":
                     data.Push(Math.Cos(data.Pop()));
                     break;
+                default:
+                    if(IsMathOperation(operation)) CalculateMathOperation(operation, ref data);
+                    break;
             }
         }
-        private double CalculateMathOperation(string operationName, List<double> data)
+        private void CalculateMathOperation(string operationName, ref Stack<double> data)
         {
             operationName = char.ToUpper(operationName[0]) + operationName.Substring(1);
             Type? myType = typeof(Math);
@@ -164,10 +161,10 @@ namespace StringCalc
                     && m.ReturnType == typeof(double)).FirstOrDefault();
             if (method == null) throw new ArgumentException("Wrong function Name");
             int paramCount = method.GetParameters().Length;
-            if (paramCount != data.Count) throw new ArgumentException($"uncorrect parameters count in function {operationName}");
+            if (paramCount > data.Count) throw new ArgumentException($"uncorrect parameters count in function {operationName}");
             object[] methodParams = new object[paramCount];
-            for (int i = 0; i < paramCount; i++) methodParams[i] = data[i];
-            return (double)method.Invoke(null, methodParams);
+            for (int i = 0; i < paramCount; i++) methodParams[i] = data.Pop();
+            data.Push( (double)method.Invoke(null, methodParams));
         }
         private bool IsMathOperation(string name)
         {
@@ -180,6 +177,10 @@ namespace StringCalc
         public void AddFunction(string name, string function)
         {
             functions.Add(name, function);
+        }
+        public void AddMathFunction(string name, int priority = Settings.NewOperationPriority)
+        {
+            Settings.OperationPriority.Add(name, priority);
         }
         private List<string> CalculateFunction(string functionName, List<string> arguments)
         {

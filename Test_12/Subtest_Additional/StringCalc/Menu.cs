@@ -61,7 +61,14 @@ namespace StringCalc
         private void Menu1()
         {
             Calculator calculator = new();
-            string formula = "max( 1 2.51)*(3 + 0.4) * 5";
+            calculator.AddFunction("test", "10+max(a, (100+100))");
+            string formula = "max( (1+2) 2.51)*(3 + 0.4) * 5+tan(2) +test(50)";
+            try
+            {
+                PrintService.Print($"Формула - {formula} = {calculator.Calculate(formula).ToString("0.###")}");
+            }
+            catch (Exception ex) { PrintService.PrintAllert(ex.Message); }
+             formula = "max( (1+2) 2.51)*(3 + 0.4) * 5+tan(2)";
             try
             {
                 PrintService.Print($"Формула - {formula} = {calculator.Calculate(formula).ToString("0.###")}");
@@ -112,7 +119,7 @@ namespace StringCalc
         {
             PrintService.Print("введiть назву функцiї (лише буквами)");
             string name = PrintService.ReadLine();
-            PrintService.Print("введiть  функцiю з аргументами (a b c d e) через пробiл, максимум 5, або без.");
+            PrintService.Print("введiть  функцiю з аргументами (a, b, c, d, e) через \"кому з пробiлом\", максимум 5, або без оргументів \"()\".");
             PrintService.Print("Якщо вводите лише один аргумент, то це буде \'a\', 2 -> \'a\' та \'b\'...");
             string func = PrintService.ReadLine();
             calculator.functions.Add(name, func);
