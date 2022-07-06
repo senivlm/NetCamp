@@ -1,4 +1,5 @@
-﻿using System;
+﻿using StringCalc.Services;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -12,19 +13,47 @@ namespace StringCalc
     internal class Calculator
     {
         public Dictionary<string, string> functions = new();
+        private Dictionary<string, double> variables = new();
         public double Calculate(string data)
         {
+            variables = new();
             List<string> strings = ToList(data);
             List<string> formula = ListToFormula(strings);
-            return CalculateForfulu(formula);
+            SetVariablesValue();
+            return CalculateFormulu(formula);
         }
         private List<string> ToList(string str)
         {
             List<string> res = new();
-            str = str.Replace(", ",";").Replace(",", ".").ToLower();
+            str = str.Replace(", ", ";").Replace(",", ".").ToLower();
             Regex regex = new Regex(@"(\d+(?:[.]\d+)?)|(\w+)|(\S)");
             MatchCollection regexRes = regex.Matches(str);
             foreach (Match m in regexRes) res.Add(m.Value);
+            return FixNegativeDigits(res);
+        }
+        private List<string> FixNegativeDigits(List<string> data)
+        {
+            List<string> res = new();
+            if (!data.Contains("-")) return data;
+            List<string> symbols = new() { "(", "+", "-", "*", "/", "^", "√" };
+            for (int i = 0; i < data.Count; i++)
+            {
+                if (i == 0 && data[i].Equals("-"))
+                {
+                    i++;
+                    res.Add($"-{data[i]}");
+                }
+                else if (symbols.Contains(data[i]) && data[i + 1].Equals("-"))
+                {
+                    res.Add(data[i]);
+                    i++; i++;
+                    res.Add($"-{data[i]}");
+                }
+                else
+                {
+                    res.Add(data[i]);
+                }
+            }
             return res;
         }
         private List<string> ListToFormula(List<string> data)
@@ -72,7 +101,7 @@ namespace StringCalc
                 }
 
                 else if (Settings.OperationPriority.ContainsKey(data[i]) && !(operations.Count > 0
-                   && Settings.OperationPriority[data[i]] < Settings.OperationPriority[operations.Peek()]))
+                   && Settings.OperationPriority[data[i]] <= Settings.OperationPriority[operations.Peek()]))
                 {
                     operations.Push(data[i]);
                 }
@@ -80,6 +109,11 @@ namespace StringCalc
                 {
                     operations.Push(data[i]);
                     AddMathFunction(data[i]);
+                }
+                else if (!Settings.OperationPriority.ContainsKey(data[i]))
+                {
+                    res.Add(data[i]);
+                    variables.Add(data[i], 0);
                 }
                 else if (operations.Count > 0)
                 {
@@ -97,7 +131,7 @@ namespace StringCalc
             }
             return res;
         }
-        private double CalculateForfulu(List<string> data)
+        private double CalculateFormulu(List<string> data)
         {
             Stack<double> digits = new();
             foreach (string str in data)
@@ -105,6 +139,10 @@ namespace StringCalc
                 if (double.TryParse(str, NumberStyles.Number, CultureInfo.InvariantCulture, out double val))
                 {
                     digits.Push(val);
+                }
+                else if (variables.Count > 0 && variables.ContainsKey(str))
+                {
+                    digits.Push(variables[str]);
                 }
                 else
                 {
@@ -122,7 +160,7 @@ namespace StringCalc
                     data.Push(data.Pop() + data.Pop());
                     break;
                 case "-":
-                    data.Push(data.Pop() - data.Pop());
+                    data.Push(-(data.Pop() - data.Pop()));
 
                     break;
                 case "*":
@@ -136,7 +174,9 @@ namespace StringCalc
                     data.Push(b / a);
                     break;
                 case "^":
-                    data.Push(Math.Pow(data.Pop(), data.Pop()));
+                    double c = data.Pop();
+                    double d = data.Pop();
+                    data.Push(Math.Pow(d, c));
                     break;
                 case "√":
                     data.Push(Math.Sqrt(data.Pop()));
@@ -148,7 +188,7 @@ namespace StringCalc
                     data.Push(Math.Cos(data.Pop()));
                     break;
                 default:
-                    if(IsMathOperation(operation)) CalculateMathOperation(operation, ref data);
+                    if (IsMathOperation(operation)) CalculateMathOperation(operation, ref data);
                     break;
             }
         }
@@ -164,7 +204,7 @@ namespace StringCalc
             if (paramCount > data.Count) throw new ArgumentException($"uncorrect parameters count in function {operationName}");
             object[] methodParams = new object[paramCount];
             for (int i = 0; i < paramCount; i++) methodParams[i] = data.Pop();
-            data.Push( (double)method.Invoke(null, methodParams));
+            data.Push((double)method.Invoke(null, methodParams));
         }
         private bool IsMathOperation(string name)
         {
@@ -209,6 +249,23 @@ namespace StringCalc
                 }
             }
             return ListToFormula(functionList);
+        }
+        private void SetVariablesValue()
+        {
+            if (variables.Count > 0)
+            {
+                foreach (var variable in variables)
+                {
+                    string valStr = "";
+                    double val = 0;
+                    do
+                    {
+                        PrintService.Print($"Додайте значення змiнної \"{variable.Key}\"");
+                        valStr = PrintService.ReadLine();
+                    } while (!double.TryParse(valStr, out val));
+                    variables[variable.Key] = val;
+                }
+            }
         }
     }
 }

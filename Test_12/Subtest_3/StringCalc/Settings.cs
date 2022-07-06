@@ -20,5 +20,6 @@ namespace StringCalc
             { "sin", 4 },
             { "cos", 4 },
         };
+        public const int NewOperationPriority = 4;
     }
 }
